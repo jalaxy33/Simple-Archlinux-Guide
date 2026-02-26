@@ -1,0 +1,33 @@
+// ~/.config/niri/my-config.kdl
+// 
+// 这里是我的设置，放到 `~/.config/niri/config.kdl` 最后覆盖默认设置：
+//    include "my-config.kdl" 
+//
+// 基于 shorin-dms-niri 的配置：https://github.com/SHORiN-KiWATA/shorin-arch-setup.git
+
+
+//-- 环境变量
+environment {
+    // GTK软件使用的渲染器，可以解决n卡双显卡导致的GTK应用启动缓慢问题，AMD或Intel单显卡不需要这行设置可以注释掉
+    GSK_RENDERER "gl"
+    // 默认文本编辑器
+    EDITOR "nvim"
+}
+
+
+//-- 窗口规则
+// 默认窗口浮动
+window-rule {
+    // 浏览器画中画插件
+    match title="- PIP"
+    open-floating true
+}
+
+
+//-- 快捷键
+binds {
+    //打开浏览器
+    Mod+B hotkey-overlay-title="浏览器 Browser" { spawn "brave"; }        
+    // 切换总览
+    Mod+Escape repeat=false { toggle-overview; }
+}
