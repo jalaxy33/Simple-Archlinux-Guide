@@ -47,7 +47,7 @@
 
 ### 卸载预装软件
 
-根据[预装软件列表](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/一键配置桌面环境#软件列表)，按自己的需要卸载预装软件
+根据[预装软件列表](httpsz://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/一键配置桌面环境#软件列表)，按自己的需要卸载预装软件
 
 - 日文输入法：
 
@@ -61,6 +61,13 @@
   # QQ、微信
   sudo pacman -Rns linuxqq-appimage wechat-appimage
   ```
+
+- 代理软件，我用的是 daed，可以把预装的 flclash 卸载掉：
+
+  ```sh
+  sudo pacman -Rns flclash-bin
+  ```
+
 
 ### 修改Niri配置
 
