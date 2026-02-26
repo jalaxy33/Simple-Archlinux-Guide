@@ -136,6 +136,7 @@ zsh我喜欢用 [zimfw](https://github.com/zimfw/zimfw) 这个框架，提供了
 - [用wine兼容层安装windows软件](./用wine兼容层安装windows软件.md)：安装在linux下没有的软件。
 - [软件安装相关](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/软件安装相关)：这篇文章推荐了很多好用的软件。
 - [Linux玩游戏](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/玩游戏)：介绍了在Linux上玩游戏所需的软件和工具，如Steam、wine兼容层、安卓模拟器等。
+- 游戏设置补充一个 `gamemode`，用于提升游戏性能，参考这个教程： [🔥-性能提升](https://arch.icekylin.online/app/common/play#🔥-性能提升)
 
 ## 其他进阶主题
 
