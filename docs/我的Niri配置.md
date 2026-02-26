@@ -1,6 +1,6 @@
 # 我的Niri配置
 
-我的 Niri 桌面是用 shorin 的[一键配置脚本](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/一键配置桌面环境)安装和配置的，选的是 Niri+[DMS](https://danklinux.com/) 方案，我觉得功能齐全且简约美观。
+我的 Niri 桌面是用 shorin 的[一键配置脚本](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/一键配置桌面环境)安装和配置的，选的是 Niri+[DMS](https://danklinux.com/) 方案，功能齐全且简约美观。
 
 一些介绍：
 
