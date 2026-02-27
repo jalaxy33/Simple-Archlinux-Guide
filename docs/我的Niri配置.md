@@ -15,9 +15,22 @@
 
 2. （可选）配置网络代理，确保安装过程中可以顺利下载所需的软件包，参见[透明代理](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/代理)。
 
-   个人觉得最方便的是 [daed](https://github.com/daeuniverse/daed)，启动服务之后，用处于同一局域网的设备访问 `http://<IP_ADDRESS>:2023`，填入订阅链接，然后就可以开启代理了。详情请看[这个教程](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/代理#daed)。
+   个人觉得最方便的是 [daed](https://github.com/daeuniverse/daed)，用 `pacman` 安装，启动服务之后，用处于同一局域网的设备访问 `http://<IP_ADDRESS>:2023`，填入订阅链接，然后就可以开启代理了。详情请看[这个教程](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/代理#daed)。
 
-3. 运行 shorin 的[一键配置脚本](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/一键配置桌面环境)，选择 Niri+DMS 方案，根据提示完成安装。
+3. 检查时区为 'Asia/Shanghai'
+  
+  ```sh
+  timedatectl
+  ```
+
+  如果不是则需要设置一下：
+
+  ```sh
+  sudo timedatectl set-timezone Asia/Shanghai
+  hwclock --systohc
+  ```
+
+1. 运行 shorin 的[一键配置脚本](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/一键配置桌面环境)，选择 Niri+DMS 方案，根据提示完成安装。
 
    如果需要资源占用更低的配置，可以选择 Shorin's Niri 方案，这个方案基于 [Waybar](https://waybar.org/)，由 [shorin](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/一键配置桌面环境#shorins-niri-功能介绍) 亲自维护。
 
@@ -40,6 +53,7 @@
   ```
 
 - 然后修改浏览器相关的快捷键（DMS-Niri的默认设置在 `~/.config/niri/dms/binds.kdl` 里）：
+
   ```kdl
   //打开浏览器
   Mod+B hotkey-overlay-title="浏览器 Browser" { spawn "brave"; }
@@ -67,7 +81,6 @@
   ```sh
   sudo pacman -Rns flclash-bin
   ```
-
 
 ### 修改Niri配置
 
