@@ -19,20 +19,20 @@
 
 3. 检查时区为 'Asia/Shanghai'
   
-  ```sh
-  timedatectl
-  ```
+    ```sh
+    timedatectl
+    ```
 
-  如果不是则需要设置一下：
+    如果不是则需要设置一下：
 
-  ```sh
-  sudo timedatectl set-timezone Asia/Shanghai
-  hwclock --systohc
-  ```
+    ```sh
+    sudo timedatectl set-timezone Asia/Shanghai
+    hwclock --systohc
+    ```
 
-1. 运行 shorin 的[一键配置脚本](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/一键配置桌面环境)，选择 Niri+DMS 方案，根据提示完成安装。
+4. 运行 shorin 的[一键配置脚本](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/一键配置桌面环境)，选择 Niri+DMS 方案，根据提示完成安装。
 
-   如果需要资源占用更低的配置，可以选择 Shorin's Niri 方案，这个方案基于 [Waybar](https://waybar.org/)，由 [shorin](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/一键配置桌面环境#shorins-niri-功能介绍) 亲自维护。
+    如果需要资源占用更低的配置，可以选择 Shorin's Niri 方案，这个方案基于 [Waybar](https://waybar.org/)，由 [shorin](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/一键配置桌面环境#shorins-niri-功能介绍) 亲自维护。
 
 ## 我的配置
 
