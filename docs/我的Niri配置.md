@@ -99,22 +99,22 @@
     1. 用 `ls /usr/share/rime-data/*.schema.yaml` 看当前所有可用方案，去掉文件名的`.schema.yaml`就是方案名字
     2. 编辑输入法配置文件
 
- ```sh
- vim /home/dai/.local/share/fcitx5/rime/default.custom.yaml
- ```
+        ```sh
+        vim /home/dai/.local/share/fcitx5/rime/default.custom.yaml
+        ```
 
- 例如：
+        例如：
 
- ```yaml
-  patch:
-    schema_list:
-      - schema: luna_pinyin_simp
-      - schema: rime_ice
-      - schema: double_pinyin_flypy
-      - schema: wubi86
-      # 添加方案，如自然码双拼
-      - schema: double_pinyin
- ```
+        ```yaml
+          patch:
+            schema_list:
+              - schema: luna_pinyin_simp
+              - schema: rime_ice
+              - schema: double_pinyin_flypy
+              - schema: wubi86
+              # 添加方案，如自然码双拼
+              - schema: double_pinyin
+        ```
 
 ### 修改Niri配置
 
