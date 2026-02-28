@@ -17,10 +17,8 @@ cd $PWD
 #     git clone https://github.com/SHORiN-KiWATA/shorin-arch-setup.git ~/.local/share/shorin-arch-setup
 # 2. 备份用户本地更改的配置文件：
 #     mv ~/.config/niri ~/.config/niri-bak
-#     mv ~/.local/bin ~/.local/bin-bak
 # 3. 将 Shorin 的配置链接到本地配置目录
 #     ln -s  ~/.local/share/shorin-arch-setup/dms-dotfiles/.config/niri ~/.config/niri
-#     ln -s ~/.local/share/shorin-arch-setup/dms-dotfiles/.local/bin ~/.local/bin
 # 4. 复制同一目录下的 `sync-modify.sh` 到 ~/.config/niri/scripts/sync-modify.sh
 # 5. 赋予此脚本执行权限：
 #     chmod +x ~/.config/niri/scripts/shorin-sync.sh

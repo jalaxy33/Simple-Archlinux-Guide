@@ -174,7 +174,6 @@ binds {
 
    ```sh
    mv ~/.config/niri ~/.config/niri-bak
-   mv ~/.local/bin ~/.local/bin-bak
    ```
 
 3. 创建符号链接，将 Shorin 的配置链接到本地配置目录：
@@ -182,9 +181,6 @@ binds {
    ```sh
    # 链接 Niri 的配置
    ln -s  ~/.local/share/shorin-arch-setup/dms-dotfiles/.config/niri ~/.config/niri
-
-   # 链接 ~/.local/bin 下的脚本
-   ln -s ~/.local/share/shorin-arch-setup/dms-dotfiles/.local/bin ~/.local/bin
    ```
 
 4. 按需修改配置。尽量少修改已有的配置文件，推荐通过新建配置文件的方式进行修改，这样可以更方便地与远程仓库的配置同步。
