@@ -82,6 +82,39 @@
   sudo pacman -Rns flclash-bin
   ```
 
+### 修改输入法预设
+
+- 修改输入法切换按键
+
+    默认是 `Super+空格`，我更习惯 `Ctrl+空格`
+
+    修改方法：`Super+z`打开应用启动器 > 搜索 `Fcitx 5 配置` > 全局选项 > 设置快捷键
+
+- 添加输入法方案
+	
+    切换至中文输入法后，按 F4 呼出方案选择菜单，选择需要的输入法。如果里面没有，参考[这篇文档](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/中文输入法#fcitx5)，添加自己要的输入法方案。
+
+    大致过程：
+    
+    1. 用 `ls /usr/share/rime-data/*.schema.yaml` 看当前所有可用方案，去掉文件名的`.schema.yaml`就是方案名字
+    2. 编辑输入法配置文件
+
+	```sh
+	vim /home/dai/.local/share/fcitx5/rime/default.custom.yaml
+	```
+	例如：
+	```
+        patch:
+          schema_list:
+            - schema: luna_pinyin_simp
+            - schema: rime_ice
+            - schema: double_pinyin_flypy
+            - schema: wubi86
+            # 添加方案，如自然码双拼
+            - schema: double_pinyin
+	```
+
+
 ### 修改Niri配置
 
 Niri 的配置文件在 `~/.config/niri/` 目录下，入口文件是 `config.kdl`，还有一些配置文件在 `~/.config/niri/dms/` 目录下。
@@ -198,6 +231,7 @@ binds {
 
 > 原理：为本地的修改创建了一个 `my-custom` 分支，在每次同步时将远程的 `main` 分支合并到 `my-custom` 分支上。
 
+
 ## DMS设置
 
 DMS 的设置界面在右上角，点击齿轮图标⚙️打开设置菜单。
@@ -223,3 +257,10 @@ DMS支持使用插件来扩展功能。
 #### 推荐插件
 
 - `Emoji & Unicode Launcher`：在启动器里输入 `:e` 即可搜索emoji表情和unicode字符，选中后会复制到剪贴板，非常方便。
+
+
+## 其他设置
+
+其他配置，如 shell配置、应用配置、编程环境设置等，参考我的配置仓库：[jalaxy33/tools](https://github.com/jalaxy33/tools)。
+
+
