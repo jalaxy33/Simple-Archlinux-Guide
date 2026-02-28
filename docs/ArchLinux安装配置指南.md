@@ -87,6 +87,7 @@ yay -S --needed nvidia-580xx-dkms nvidia-580xx-utils lib32-nvidia-580xx-utils
 - Hyprland：[安装Hyprland](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/安装Hyprland)、[视频教程](https://www.bilibili.com/video/BV1wTsVzpET4)
 
 🌟 如果不想自己配置，可以看看这个一键安装脚本（推荐！）：[一键配置桌面环境](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/一键配置桌面环境)
+> 安装前执行 `timedatectl` 确认系统时区是否为 `Asia/Shanghai`。如果不是，执行 `sudo timedatectl set-timezone Asia/Shanghai` 和 `sudo hwclock --systohc`
 
 ✅ 我尝试过的：
 
