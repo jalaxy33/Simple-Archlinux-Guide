@@ -161,7 +161,25 @@ binds {
 }
 ```
 
+### 可选：使用自己的starship配置
+
+默认情况下，matugen会自动修改终端的 starship 颜色配置，会覆盖starship配置文件（`~/.config/starship.toml`）。如果希望使用自己的starship配置，需要编辑 matugen 的配置：
+
+```sh
+vim ~/.config/matugen/config.toml
+```
+
+用 `#` 注释以下内容：
+
+```toml
+[templates.starship]
+input_path = '~/.config/matugen/templates/starship-colors.toml'
+output_path = '~/.config/starship.toml'
+```
+
 ### 可选：与Shorin的配置同步
+
+> **注：目前不再推荐**
 
 如果希望与 Shorin 的配置保持同步，同时希望保留自己的自定义配置。可以按下面的步骤来：
 
@@ -231,10 +249,6 @@ binds {
 ## DMS设置
 
 DMS 的设置界面在右上角，点击齿轮图标⚙️打开设置菜单。
-
-### 设置开机锁屏
-
-右上角打开DMS设置 > `电源与安全` > `锁屏` > `锁屏行为` > 打开 `Lock at startup` 选项。
 
 ### 设置待机行为
 
