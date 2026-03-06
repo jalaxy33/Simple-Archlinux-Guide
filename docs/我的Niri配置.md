@@ -52,6 +52,8 @@
   sudo pacman -Rns firefox
   ```
 
+  其他的常用浏览器安装方法可以看[这篇文档](./常用软件.md#浏览器)
+
 - 然后修改浏览器相关的快捷键（DMS-Niri的默认设置在 `~/.config/niri/dms/binds.kdl` 里）：
 
   ```kdl
@@ -265,6 +267,12 @@ DMS 的设置界面在右上角，点击齿轮图标⚙️打开设置菜单。
 - `电源与安全` > `锁屏` > `锁屏行为` > 启用 `挂起前锁屏`
 
 ### 个性化设置
+
+- 设置壁纸：
+  
+    DMS设置 > `个性化` > `壁纸` 最上方方框
+
+    推荐两个壁纸下载网址：[wallhaven.cc](https://wallhaven.cc/)、[哲风壁纸](https://haowallpaper.com/)
 
 - 设置时间显示格式：
 
