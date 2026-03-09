@@ -69,6 +69,11 @@ yay -S --needed nvidia-580xx-dkms nvidia-580xx-utils lib32-nvidia-580xx-utils
 
 👉 可以参考这篇文章，按需安装：[好用的命令行工具](./好用的命令行工具.md)
 
+我还会额外安装一个 [JetBrains Maple Mono](https://github.com/SpaceTimee/Fusion-JetBrainsMapleMono) Nerdfont 字体：
+```sh
+yay -S --needed ttf-jetbrains-maple-mono-nf-xx-xx
+```
+
 ## 7. 安装桌面环境
 
 如果需要桌面环境，有两种选择：
