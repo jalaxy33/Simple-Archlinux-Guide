@@ -14,6 +14,8 @@ sudo pacman -S --needed pamac-aur
 
 以下所有命令默认省略 `sudo`。
 
+> `yay` 和 `paru` 等 AUR 助手的用法与 `pacman` 一致，以下命令同样适用于它们。区别在于 AUR 助手不允许在 root 用户下运行，不用加 `sudo`。
+
 ### 安装与下载
 
 - 安装应用：
@@ -116,4 +118,3 @@ sudo pacman -S --needed pamac-aur
 
 - `pacman -Sy 软件包`
 - 先执行 `pacman -Sy` 或 `pacman -Syuw` 再执行 `pacman -S 软件包`（此处应使用 `-Su` 安装软件包）。
-
