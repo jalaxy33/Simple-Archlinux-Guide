@@ -20,6 +20,7 @@ environment {
 window-rule {
     // 浏览器画中画插件
     match title="- PIP"
+    // adb控制安卓设备：scrcpy
     open-floating true
 }
 
