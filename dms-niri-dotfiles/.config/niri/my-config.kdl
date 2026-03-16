@@ -20,7 +20,8 @@ environment {
 window-rule {
     // 浏览器画中画插件
     match title="- PIP"
-    // adb控制安卓设备：scrcpy
+    // Steam好友列表
+    match app-id="steam" title="好友列表"
     open-floating true
 }
 
