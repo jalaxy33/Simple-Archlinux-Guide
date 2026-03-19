@@ -22,6 +22,8 @@ window-rule {
     match title="- PIP"
     // Steam好友列表
     match app-id="steam" title="好友列表"
+    // adb控制安卓设备：scrcpy
+    match app-id="scrcpy"
     open-floating true
 }
 
