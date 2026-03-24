@@ -18,21 +18,21 @@
    个人觉得最方便的是 [daed](https://github.com/daeuniverse/daed)，用 `pacman` 安装，启动服务之后，用处于同一局域网的设备访问 `http://<IP_ADDRESS>:2023`，填入订阅链接，然后就可以开启代理了。详情请看[这个教程](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/代理#daed)。
 
 3. 检查时区为 'Asia/Shanghai'
-  
-    ```sh
-    timedatectl
-    ```
 
-    如果不是则需要设置一下：
+   ```sh
+   timedatectl
+   ```
 
-    ```sh
-    sudo timedatectl set-timezone Asia/Shanghai
-    hwclock --systohc
-    ```
+   如果不是则需要设置一下：
+
+   ```sh
+   sudo timedatectl set-timezone Asia/Shanghai
+   hwclock --systohc
+   ```
 
 4. 运行 shorin 的[一键配置脚本](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/一键配置桌面环境)，选择 Niri+DMS 方案，根据提示完成安装。
 
-    如果需要资源占用更低的配置，可以选择 Shorin's Niri 方案，这个方案基于 [Waybar](https://waybar.org/)，由 [shorin](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/一键配置桌面环境#shorins-niri-功能介绍) 亲自维护。
+   如果需要资源占用更低的配置，可以选择 Shorin's Niri 方案，这个方案基于 [Waybar](https://waybar.org/)，由 [shorin](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/一键配置桌面环境#shorins-niri-功能介绍) 亲自维护。
 
 ## 我的配置
 
@@ -90,35 +90,34 @@
 
 - 修改输入法切换按键
 
-    默认是 `Super+空格`，我更习惯 `Ctrl+空格`
+  默认是 `Super+空格`，我更习惯 `Ctrl+空格`
 
-    修改方法：`Super+z`打开应用启动器 > 搜索 `Fcitx 5 配置` > 全局选项 > 设置快捷键
+  修改方法：`Super+z`打开应用启动器 > 搜索 `Fcitx 5 配置` > 全局选项 > 设置快捷键
 
 - 添加输入法方案
 
-    切换至中文输入法后，按 F4 呼出方案选择菜单，选择需要的输入法。如果里面没有，参考[这篇文档](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/中文输入法#fcitx5)，添加自己要的输入法方案。
+  切换至中文输入法后，按 F4 呼出方案选择菜单，选择需要的输入法。如果里面没有，参考[这篇文档](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki/中文输入法#fcitx5)，添加自己要的输入法方案。
 
-    大致过程：
+  大致过程：
+  1. 用 `ls /usr/share/rime-data/*.schema.yaml` 看当前所有可用方案，去掉文件名的`.schema.yaml`就是方案名字
+  2. 编辑输入法配置文件
 
-    1. 用 `ls /usr/share/rime-data/*.schema.yaml` 看当前所有可用方案，去掉文件名的`.schema.yaml`就是方案名字
-    2. 编辑输入法配置文件
+     ```sh
+     vim /home/dai/.local/share/fcitx5/rime/default.custom.yaml
+     ```
 
-        ```sh
-        vim /home/dai/.local/share/fcitx5/rime/default.custom.yaml
-        ```
+     例如：
 
-        例如：
-
-        ```yaml
-          patch:
-            schema_list:
-              - schema: luna_pinyin_simp
-              - schema: rime_ice
-              - schema: double_pinyin_flypy
-              - schema: wubi86
-              # 添加方案，如自然码双拼
-              - schema: double_pinyin
-        ```
+     ```yaml
+     patch:
+       schema_list:
+         - schema: luna_pinyin_simp
+         - schema: rime_ice
+         - schema: double_pinyin_flypy
+         - schema: wubi86
+         # 添加方案，如自然码双拼
+         - schema: double_pinyin
+     ```
 
 ### 修改Niri配置
 
@@ -179,6 +178,27 @@ vim ~/.config/matugen/config.toml
 [templates.starship]
 input_path = '~/.config/matugen/templates/starship-colors.toml'
 output_path = '~/.config/starship.toml'
+```
+
+### 可选：修改默认图片查看器
+
+默认的图片查看器是 `imv`，很轻量但是默认只能查看当前选择的图片。推荐换成 `imv-dir` ，可以查看当前目录下的所有图片。
+
+一条命令修改默认图片查看器为 `imv-dir`：
+
+```sh
+xdg-mime default imv-dir.desktop $(grep "^image/" /usr/share/mime/types)
+```
+
+另外，`imv-dir` 的默认排序不是自然排序，有时候可能会有问题。编辑 `/usr/bin/imv-dir` 或者创建一个 `~/.local/bin/imv-dir` 并用 `chmod +x` 赋予执行权限，内容如下：
+
+```sh
+#!/bin/sh -efu
+if [ $# -gw 2 ]; then
+  exec imv "$@"
+else
+  exec imv -n "$1" $(ls "$(dirname "$1")" | sort -n)
+fi
 ```
 
 ### 可选：与Shorin的配置同步
@@ -258,7 +278,7 @@ DMS 的设置界面在右上角，点击齿轮图标⚙️打开设置菜单。
 
 - 显示程序坞，左上角显示当前所有打开的窗口
 
-    DMS设置 > `Dank Bar` > `部件` > `左侧区域` 在最底下添加 `程序坞` 部件
+  DMS设置 > `Dank Bar` > `部件` > `左侧区域` 在最底下添加 `程序坞` 部件
 
 ### 设置锁屏和待机行为
 
@@ -269,18 +289,18 @@ DMS 的设置界面在右上角，点击齿轮图标⚙️打开设置菜单。
 ### 个性化设置
 
 - 设置壁纸：
-  
-    DMS设置 > `个性化` > `壁纸` 最上方方框
 
-    推荐两个壁纸下载网址：[wallhaven.cc](https://wallhaven.cc/)、[哲风壁纸](https://haowallpaper.com/)
+  DMS设置 > `个性化` > `壁纸` 最上方方框
+
+  推荐两个壁纸下载网址：[wallhaven.cc](https://wallhaven.cc/)、[哲风壁纸](https://haowallpaper.com/)
 
 - 设置时间显示格式：
 
-    DMS设置 > `个性化` > `时间与天气` > `日期格式` > `顶栏格式` 和 `锁屏格式` 改为 `日 月份 日期`
+  DMS设置 > `个性化` > `时间与天气` > `日期格式` > `顶栏格式` 和 `锁屏格式` 改为 `日 月份 日期`
 
 - 设置天气显示：
 
-    DMS设置 > `个性化` > `时间与天气` > `天气` > `自定义位置` > `位置搜索` 用英文输入城市名称搜索
+  DMS设置 > `个性化` > `时间与天气` > `天气` > `自定义位置` > `位置搜索` 用英文输入城市名称搜索
 
 ### 安装插件
 

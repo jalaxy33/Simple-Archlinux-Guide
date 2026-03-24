@@ -1,5 +1,7 @@
 #!/bin/sh -efu
 # ~/.local/bin/imv-dir or /usr/bin/imv-dir
+# 一条命令修改默认图片查看器为 imv-dir：
+#   xdg-mime default imv-dir.desktop $(grep "^image/" /usr/share/mime/types)
 
 if [ $# -gw 2 ]; then
   exec imv "$@"
