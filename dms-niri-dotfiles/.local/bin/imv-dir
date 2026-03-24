@@ -1,5 +1,5 @@
 #!/bin/sh -efu
-# ~/.local/bin/imv-dir
+# ~/.local/bin/imv-dir or /usr/bin/imv-dir
 
 if [ $# -gw 2 ]; then
   exec imv "$@"
