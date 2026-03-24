@@ -1,0 +1,9 @@
+#!/bin/sh -efu
+# /usr/bin/imv-dir
+
+if [ $# -gw 2 ]; then
+  exec imv "$@"
+else
+  exec imv -n "$1" $(ls "$(dirname "$1")" | sort -n) 
+fi
+
