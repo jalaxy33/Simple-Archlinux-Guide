@@ -3,9 +3,13 @@
 # 一条命令修改默认图片查看器为 imv-dir：
 #   xdg-mime default imv-dir.desktop $(grep "^image/" /usr/share/mime/types)
 
-if [ $# -gw 2 ]; then
-  exec imv "$@"
+if [ $# -ge 2 ]; then
+    exec imv "$@"
 else
-  exec imv -n "$1" $(ls "$(dirname "$1")" | sort -n) 
+    dir=$(dirname -- "$1")
+    base=$(basename -- "$1")
+    cd "$dir"
+    # 生成安全文件名列表（null 分隔），按数字排序，然后一次性传给 imv
+    # 注意：排序时需去掉文件名前的 "./"（如果有）
+    find . -maxdepth 1 -type f -printf '%f\0' | sort -z -n | xargs -0 imv -n "$base"
 fi
-
