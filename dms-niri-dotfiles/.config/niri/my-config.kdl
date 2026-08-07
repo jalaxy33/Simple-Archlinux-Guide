@@ -31,7 +31,7 @@ window-rule {
 //-- 快捷键
 binds {
     //打开浏览器
-    Mod+B hotkey-overlay-title="浏览器 Browser" { spawn "brave"; }        
+    Mod+B hotkey-overlay-title="浏览器 Browser" { spawn "brave-bin"; }        
     // 切换总览
     Mod+Escape repeat=false { toggle-overview; }
 }
