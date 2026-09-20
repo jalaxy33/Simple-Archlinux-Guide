@@ -8,12 +8,12 @@
 
 ## 指南正文
 
-👉 看这里：[ArchLinux安装配置指南](./docs/ArchLinux安装配置指南.md)
+👉 看这里：[ArchLinux指南](./docs/ArchLinux指南.md)
+
+> 状态：重新修订中
 
 ## 文档目录
 
-- [ArchLinux安装配置指南](./docs/ArchLinux安装配置指南.md)
-- [手动安装系统的注意事项](./docs/手动安装系统的注意事项.md)
 - [好用的命令行工具](./docs/好用的命令行工具.md)
 - [我的Niri配置](./docs/我的Niri配置.md)
 - [本地化设置](./docs/本地化设置.md)

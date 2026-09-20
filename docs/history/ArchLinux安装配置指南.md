@@ -10,7 +10,7 @@
 - [「Linux游戏指南」一次挑战与一场斗争](https://www.bilibili.com/video/BV1zyttzPEmp)
 - [从「Linuxmint入门」到「ArchLinux安装详解」桌面端Linux入门的最佳路径](https://www.bilibili.com/video/BV19DBqB4EY4/)
 
-[教程文档](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide/wiki)写的很详细，推荐按照下面的步骤阅读。
+[教程文档](https://github.com/SHORiN-KiWATA/Shorin-ArchLinux-Guide)写的很详细，推荐按照下面的步骤阅读。
 
 ## 1. 前期准备
 
