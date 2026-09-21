@@ -4,42 +4,21 @@
 
 ## 1. 安装
 
-### 安装必备软件
+### 安装基础软件包
 
-- 安装基础软件：
+```sh
+sudo pacman -S --needed niri xwayland-satellite xdg-desktop-portal-gtk
+sudo pacman -S --needed xdg-desktop-portal-gnome --assume-installed nautilus
+```
 
-  ```sh
-  sudo pacman -S --needed niri xwayland-satellite xdg-desktop-portal-gtk
-  sudo pacman -S --needed xdg-desktop-portal-gnome --assume-installed nautilus
-  ```
+<details><summary>软件包说明</summary><br>
 
-  <details><summary>软件包说明</summary>
+- `niri` 本体
+- `xwayland-satellite` 提供在 wayland 上运行 x11 应用的兼容环境
+- `xdg-desktop-portal-gtk` 提供文件选择功能
+- `xdg-desktop-portal-gnome` 提供提供屏幕共享功能，用 `--assume-installed` 忽略该包提供的 nautilus 文件管理器
 
-  .
-  - `niri` 本体
-  - `xwayland-satellite` 提供在 wayland 上运行 x11 应用的兼容环境
-  - `xdg-desktop-portal-gtk` 提供文件选择功能
-  - `xdg-desktop-portal-gnome` 提供提供屏幕共享功能，用 `--assume-installed` 忽略该包提供的 nautilus 文件管理器
-
-  </details>
-
-- 安装其他必备软件：
-
-  ```sh
-  sudo pacman -S --needed kitty fuzzel satty wl-clipboard
-  paru -S ttf-jetbrains-maple-mono-nf-xx-xx
-  ```
-
-  <details><summary>软件包说明</summary>
-
-  .
-  - `kitty` 终端模拟器，我更习惯用这个，也可以用 niri 默认的 alacrity
-  - `fuzzel` 是 niri 默认的程序启动器
-  - `satty` 截图编辑软件
-  - `wl-clipboard` 提供更丰富的剪贴板功能
-  - `ttf-jetbrains-maple-mono-nf-xx-xx` 等宽字体
-
-  </details>
+</details>
 
 ### 安装文件管理器
 
@@ -76,6 +55,40 @@ sudo pacman -S --needed tumbler ffmpegthumbnailer poppler-glib webp-pixbuf-loade
 - `poppler-glib` PDF 预览
 - `webp-pixbuf-loader` webp 缩略图
 - `icoextract` `python-pillow` exe 缩略图
+
+</details>
+
+### 安装其他必备软件
+
+```sh
+sudo pacman -S --needed kitty fuzzel satty wl-clipboard
+paru -S ttf-jetbrains-maple-mono-nf-xx-xx
+```
+
+<details><summary>软件包说明</summary><br>
+
+- `kitty` 终端模拟器，我更习惯用这个，也可以用 niri 默认的 alacrity
+- `fuzzel` 是 niri 默认的程序启动器
+- `satty` 截图编辑软件
+- `wl-clipboard` 提供更丰富的剪贴板功能
+- `ttf-jetbrains-maple-mono-nf-xx-xx` 等宽字体
+
+</details>
+
+可以再安装自己喜欢的浏览器，如 `firefox` 等，我习惯用 `brave`。
+
+<details><summary>brave 浏览器安装方式</summary><br>
+
+推荐去 AI 功能版，用 AUR 安装：
+```sh
+paru -S brave-origin-bin
+```
+
+网络环境不好的也可以安装原版
+```sh
+# 原版
+sudo pacman -S --needed brave-bin
+```
 
 </details>
 
