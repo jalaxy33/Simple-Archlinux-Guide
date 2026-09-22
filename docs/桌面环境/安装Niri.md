@@ -1,6 +1,11 @@
 # Niri安装配置
 
-> 如果是在虚拟机中安装 niri，有一些[额外设置](#kvm-niri)，不然无法启动 niri 桌面。
+## 0. 准备工作
+
+本文假定读者已经按照[系统安装教程](../系统安装/手动安装ArchLinux.md)完成了 ArchLinux 基础系统的安装。在安装 Niri 桌面以前，有一些额外的准备工作：
+
+- 如果是在虚拟机中安装 niri，有一些[额外设置](#vm-niri)，不然无法启动 niri 桌面。
+- 如果你在国内，在安装 AUR 软件时可能遇到网络问题，参考[网络代理](../软件工具/proxy网络代理.md)文档。
 
 ## 1. 安装
 
@@ -28,7 +33,7 @@ niri 默认的文件管理器是 GNOME 的 `nautilus`，我更习惯用 XFCE 的
 
 ```sh
 sudo pacman -S --needed thunar
-sudo pacman -S --needed file-roller thunar-archive-plugin thunar-volman
+sudo pacman -S --needed file-roller thunar-archive-plugin thunar-volman xfce4-settings
 sudo pacman -S --needed gvfs-smb gvfs-mtp gvfs-gphoto2
 sudo pacman -S --needed tumbler ffmpegthumbnailer poppler-glib webp-pixbuf-loader icoextract python-pillow
 ```
@@ -41,6 +46,7 @@ sudo pacman -S --needed tumbler ffmpegthumbnailer poppler-glib webp-pixbuf-loade
 - `file-roller` 压缩解压
 - `thunar-archive-plugin` 提供右键的压缩解压选项
 - `thunar-volman` 自动管理移动硬盘等设备
+- `xfce4-settings` xfce桌面相关设置，可以用来设置默认应用程序
 
 文件系统拓展：
 
@@ -58,10 +64,10 @@ sudo pacman -S --needed tumbler ffmpegthumbnailer poppler-glib webp-pixbuf-loade
 
 </details>
 
-### 安装其他必备软件
+### 安装必备工具
 
 ```sh
-sudo pacman -S --needed kitty fuzzel satty wl-clipboard
+sudo pacman -S --needed kitty fuzzel mpv imv satty wl-clipboard gnome-font-viewer
 paru -S ttf-jetbrains-maple-mono-nf-xx-xx
 ```
 
@@ -69,28 +75,21 @@ paru -S ttf-jetbrains-maple-mono-nf-xx-xx
 
 - `kitty` 终端模拟器，我更习惯用这个，也可以用 niri 默认的 alacrity
 - `fuzzel` 是 niri 默认的程序启动器
-- `satty` 截图编辑软件
+- `mpv` 视频播放器
+- `imv` 图片查看器
+- `satty` 截图编辑
 - `wl-clipboard` 提供更丰富的剪贴板功能
+- `gnome-font-viewer` 字体管理
 - `ttf-jetbrains-maple-mono-nf-xx-xx` 等宽字体
 
 </details>
 
-可以再安装自己喜欢的浏览器，如 `firefox` 等，我习惯用 `brave`。
+### 其他好用的软件
 
-<details><summary>brave 浏览器安装方式</summary><br>
+👉 查看以下文档：
 
-推荐去 AI 功能版，用 AUR 安装：
-```sh
-paru -S brave-origin-bin
-```
-
-网络环境不好的也可以安装原版
-```sh
-# 原版
-sudo pacman -S --needed brave-bin
-```
-
-</details>
+- [CLI命令行工具推荐](../软件工具/CLI命令行工具推荐.md)
+- [GUI软件推荐](../软件工具/GUI软件推荐.md)，如浏览器等
 
 ## 2. 安装预设配置（desktop shell）
 
@@ -138,7 +137,59 @@ niri 的配置文件在 `~/.config/niri/config.kdl`：
 vim ~/.config/niri/config.kdl
 ```
 
-👉 可以参考我的 [niri 配置](https://github.com/jalaxy33/niri-dotfiles)
+### 可选：使用我的配置
+
+如果想用我的配置
+
+1. 安装 chezmoi：
+
+   ```sh
+   sudo pacman -S --needed chezmoi
+   ```
+
+2. 我的[命令行配置](https://github.com/jalaxy33/dotfiles)：
+
+   - 初次加载
+
+     ```sh
+     chezmoi init --apply jalaxy33
+     ```
+
+     > <details><summary>如果你在国内</summary>
+     >
+     > ```sh
+     > chezmoi init --apply https://gh-proxy.org/https://github.com/jalaxy33/niri-dotfiles
+     > ```
+     >
+     > </details>
+
+   - 同步配置：
+
+     ```sh
+     chezmoi update
+     ```
+
+3. 我的 [niri 配置](https://github.com/jalaxy33/niri-dotfiles/)
+
+   - 初次加载
+
+     ```sh
+     chezmoi init -S ~/.local/share/chezmoi-niri/ --apply https://github.com/jalaxy33/niri-dotfiles
+     ```
+
+     > <details><summary>如果你在国内</summary>
+     >
+     > ```sh
+     > chezmoi init -S ~/.local/share/chezmoi-niri/ --apply https://gh-proxy.org/https://github.com/jalaxy33/niri-dotfiles
+     > ```
+     >
+     > </details>
+
+   - 同步配置：
+
+     ```sh
+     chezmoi update -S ~/.local/share/chezmoi-niri/
+     ```
 
 ### 启动 niri 桌面
 
@@ -154,7 +205,7 @@ niri-session
 
 niri 默认的文件管理器是 GNOME 的 `nautilus`，但是我更喜欢 XFCE 的 `thunar`。功能强大，高度可自定义，且内存占用极低。
 
-#### thunar
+#### 配置 thunar
 
 - 管理侧边栏书签
   - 添加书签：将目录图标拖到侧边栏相应位置
@@ -214,11 +265,100 @@ sudo systemctl enable ly@tty1
 > sudo systemctl disable getty@tty1
 > ```
 
+## 使用技巧
+
+### 获取窗口信息
+
+编辑 `window-rule` 窗口规则前，可以用以下命令获得指定窗口的信息：
+
+```sh
+niri msg pick-window
+```
+
+执行命令后，鼠标会变成十字，点击想查看的窗口显示 `app-id` 和 `title` 等信息。
+
+### 设置默认应用程序
+
+总的来说是两类方式：
+
+<details>
+<summary><strong>通过 xdg-mime 命令设置</strong></summary><br>
+
+最通用，无需 GUI 界面
+
+- 查询当前默认查看器，例如查看 png 格式当前默认程序
+
+  ```sh
+  xdg-mime query default image/png
+  ```
+
+- 设置新的默认打开方式：
+
+  ```sh
+  xdg-mime default <应用.desktop> <MIME类型>
+  ```
+
+  例如，将 `imv-dir` 设为默认图片查看器：
+
+  ```sh
+  xdg-mime default imv-dir.desktop image/png image/jpeg image/gif image/bmp image/tiff
+
+  # 更彻底的方法
+  xdg-mime default imv-dir.desktop $(grep "^image/" /usr/share/mime/types)
+  ```
+
+</details>
+
+<details>
+<summary><strong>通过 GUI 设置</strong></summary><br>
+
+通过安装 GNOME、KDE 或 Xfce 等桌面的「桌面设置」软件来设置默认应用程序。
+
+既然安装了 xfce 的文件管理器，那就用它的设置程序好了：
+
+```sh
+sudo pacman -S --needed xfce4-settings
+```
+
+启动：
+
+```sh
+xfce4-settings-manager
+```
+
+找到「**默认应用程序**」，在「**其他**」选项卡从列表中选择应用并设为默认
+
+</details>
+
+### 设置 imv 为默认图片查看器
+
+`imv` 默认每次只打开一张图片，建议用 `imv-dir`，可以查看当前目录下的所有图片。
+
+<details>
+<summary><strong>设置方式</strong></summary><br>
+
+一条命令修改默认图片查看器为 `imv-dir`：
+
+```sh
+xdg-mime default imv-dir.desktop $(grep "^image/" /usr/share/mime/types)
+```
+
+另外，imv-dir 的默认排序不是自然排序，有时候可能会有问题。编辑 `/usr/bin/imv-dir`（不推荐）或者创建一个 `~/.local/bin/imv-dir` 并用 `chmod +x` 赋予执行权限，内容如下：
+
+```sh
+#!/bin/sh -efu
+if [ $# -gw 2 ]; then
+  exec imv "$@"
+else
+  exec imv -n "$1" $(ls "$(dirname "$1")" | sort -n)
+fi
+```
+
+</details>
+
 ## 附录
 
-### 在虚拟机中安装 Niri
-
-<a name="kvm-niri"></a>
+### 在虚拟机中安装 Niri<a name="vm-niri"></a>
 
 用虚拟机安装 niri 需要开启显卡的 3d 加速功能。KVM 有额外设置。
 
@@ -227,25 +367,25 @@ sudo systemctl enable ly@tty1
 
 1. 首先确认核显编号：
 
-   ```sh
-   spci -Dnnk | grep -A3 -iE "vga|3d|display controller"
-   ```
+```sh
+spci -Dnnk | grep -A3 -iE "vga|3d|display controller"
+```
 
-   命令输出类似于：
+命令输出类似于：
 
-   ```sh
-   0000:00:02.0 Display controller [0380]: Intel Corporation Alder Lake-S GT1 [UHD Graphics 770] [8086:4680] (rev 0c)
-     Subsystem: Dell Device [1028:0a9f]
-     Kernel driver in use: i915
-     Kernel modules: i915, xe
-   --
-   0000:01:00.0 VGA compatible controller [0300]: NVIDIA Corporation GA102 [GeForce RTX 3080 Lite Hash Rate] [10de:2216] (rev a1)
-     Subsystem: Micro-Star International Co., Ltd. [MSI] Device [1462:3896]
-     Kernel driver in use: nvidia
-     Kernel modules: nouveau, nvidia_drm, nvidia
-   ```
+```sh
+0000:00:02.0 Display controller [0380]: Intel Corporation Alder Lake-S GT1 [UHD Graphics 770] [8086:4680] (rev 0c)
+  Subsystem: Dell Device [1028:0a9f]
+  Kernel driver in use: i915
+  Kernel modules: i915, xe
+--
+0000:01:00.0 VGA compatible controller [0300]: NVIDIA Corporation GA102 [GeForce RTX 3080 Lite Hash Rate] [10de:2216] (rev a1)
+  Subsystem: Micro-Star International Co., Ltd. [MSI] Device [1462:3896]
+  Kernel driver in use: nvidia
+  Kernel modules: nouveau, nvidia_drm, nvidia
+```
 
-   找到核显开头的编号，这里是 `0000:00:02.0`
+找到核显开头的编号，这里是 `0000:00:02.0`
 
 2. 调整 virt-manager 的虚拟机设置：
    - 「显示协议 Spice」保持默认设置：「监听类型」为地址，不启用 OpenGL 选项
