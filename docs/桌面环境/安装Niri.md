@@ -12,7 +12,7 @@
 ### 安装基础软件包
 
 ```sh
-sudo pacman -S --needed niri xwayland-satellite xdg-desktop-portal-gtk xfce4-settings nwg-look
+sudo pacman -S --needed niri xwayland-satellite xdg-desktop-portal-gtk xfce4-settings nwg-look adw-gtk-theme
 sudo pacman -S --needed xdg-desktop-portal-gnome --assume-installed nautilus
 ```
 
@@ -24,6 +24,7 @@ sudo pacman -S --needed xdg-desktop-portal-gnome --assume-installed nautilus
 - `xdg-desktop-portal-gnome` 提供提供屏幕共享功能，用 `--assume-installed` 忽略该包提供的 nautilus 文件管理器
 - `xfce4-settings` xfce桌面相关设置，可以用来设置默认应用程序
 - `nwg-look` 用来管理 gtk 主题
+- `adw-gtk-theme` gtk主题
 
 </details>
 
@@ -68,7 +69,7 @@ sudo pacman -S --needed tumbler ffmpegthumbnailer poppler-glib webp-pixbuf-loade
 ### 安装必备工具
 
 ```sh
-sudo pacman -S --needed fish kitty fuzzel mpv imv satty wl-clipboard gnome-font-viewer adw-gtk-theme
+sudo pacman -S --needed fish kitty fuzzel mpv imv satty wl-clipboard gnome-font-viewer
 paru -S ttf-jetbrains-maple-mono-nf-xx-xx
 ```
 
@@ -82,7 +83,6 @@ paru -S ttf-jetbrains-maple-mono-nf-xx-xx
 - `satty` 截图编辑
 - `wl-clipboard` 提供更丰富的剪贴板功能，配合实现截图编辑
 - `gnome-font-viewer` 字体管理
-- `adw-gtk-theme` 推荐的 GTK 主题
 - `ttf-jetbrains-maple-mono-nf-xx-xx` 等宽字体，用于 kitty 的字体配置
 
 </details>
@@ -274,6 +274,10 @@ niri 默认的文件管理器是 GNOME 的 `nautilus`，但是我更喜欢 XFCE 
 - 设置总是显示缩略图
 
   左上角`编辑`菜单 > `首选项` > 将 `显示缩略图` 设为「总是」
+
+- 隐藏菜单栏
+
+  `视图` > 取消 `菜单栏`
 
 - 右键从此处打开终端
 
