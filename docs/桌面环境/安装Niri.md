@@ -152,46 +152,52 @@ vim ~/.config/niri/config.kdl
 
 2. 我的[命令行配置](https://github.com/jalaxy33/dotfiles)：
 
-   初次加载
+   - 初次加载
 
-   ```sh
-   chezmoi init --apply jalaxy33
-   ```
+     ```sh
+     chezmoi init --apply jalaxy33
+     ```
 
-   > <details><summary>如果你在国内</summary>
-   >
-   > ```sh
-   > chezmoi init --apply https://gh-proxy.org/https://github.com/jalaxy33/dotfiles
-   > ```
-   >
-   > </details>
+     > <details><summary>如果你在国内</summary>
+     >
+     > ```sh
+     > chezmoi init --apply https://gh-proxy.org/https://github.com/jalaxy33/dotfiles
+     > ```
+     >
+     > </details>
 
-   同步配置：
+   - 同步配置：
 
-   ```sh
-   chezmoi update
-   ```
+     ```sh
+     chezmoi update
+     ```
 
 3. 我的 [niri 配置](https://github.com/jalaxy33/niri-dotfiles/)
 
-   初次加载
+   - 初次加载
+
+     ```sh
+     chezmoi init -S ~/.local/share/chezmoi-niri/ --apply https://github.com/jalaxy33/niri-dotfiles
+     ```
+
+     > <details><summary>如果你在国内</summary>
+     >
+     > ```sh
+     > chezmoi init -S ~/.local/share/chezmoi-niri/ --apply https://gh-proxy.org/https://github.com/jalaxy33/niri-dotfiles
+     > ```
+     >
+     > </details>
+
+   - 同步配置：
+
+     ```sh
+     chezmoi update -S ~/.local/share/chezmoi-niri/
+     ```
+
+   拉取或同步niri配置后，重启shell，执行以下命令检查并安装缺失的依赖：
 
    ```sh
-   chezmoi init -S ~/.local/share/chezmoi-niri/ --apply https://github.com/jalaxy33/niri-dotfiles
-   ```
-
-   > <details><summary>如果你在国内</summary>
-   >
-   > ```sh
-   > chezmoi init -S ~/.local/share/chezmoi-niri/ --apply https://gh-proxy.org/https://github.com/jalaxy33/niri-dotfiles
-   > ```
-   >
-   > </details>
-
-   同步配置：
-
-   ```sh
-   chezmoi update -S ~/.local/share/chezmoi-niri/
+   check-niri-dependencies
    ```
 
 ### 启动 niri 桌面
