@@ -24,37 +24,6 @@
   paru -S zimfw
   ```
 
-
-<details>
-
-<summary><h3>可选：bash 交互体验优化</h3></summary>
-
-可以安装 [flyline](https://github.com/HalFrgrd/flyline)，让 bash 获得类似于 fish 的交互式体验
-
-```sh
-paru -S flyline
-```
-
-> 注：flyline 通过 cargo 编译安装，编译过程需要从 github 拉取依赖，安装前建议配置好 rust 开发环境和相应的网络环境。
-
-<details><summary>也可以用 homebrew 直接安装预编译二进制文件</summary>
-
-```sh
-brew install flyline
-```
-
-</details>
-
-然后在 `~/.bashrc` 中写入：
-
-```sh
-enable -f /usr/lib/bash/libflyline.so flyline
-```
-
-重启 bash 即启用
-
-</details>
-
 ## 终端体验优化
 
 ```sh
@@ -84,6 +53,34 @@ sudo pacman -S --needed bat lazygit chezmoi zellij
 - [lazygit](https://github.com/jesseduffield/lazygit)：好用的 git 互动式 TUI 管理工具
 - [chezmoi](https://chezmoi.io/)：快速同步 dotfiles（用户配置文件），类似定位的还有 `stow`
 - [zellij](https://zellij.dev/)：好用的终端复用器，在同一个窗口开多个终端，screen 命令的替代。比 `tmux` 的键位操作更直观，类似定位的还有 `herdr`。
+
+</details>
+
+### 可选：bash 交互体验优化
+
+可以安装 [flyline](https://github.com/HalFrgrd/flyline)，让 bash 获得类似于 fish 的交互式体验
+
+```sh
+paru -S flyline
+```
+
+> 注：flyline 通过 cargo 编译安装，编译过程需要从 github 拉取依赖，安装前建议配置好 rust 开发环境和相应的网络环境。
+
+  <details><summary>也可以用 homebrew 直接安装预编译二进制文件</summary>
+
+```sh
+brew install flyline
+```
+
+  </details>
+
+然后在 `~/.bashrc` 中写入：
+
+```sh
+enable -f /usr/lib/bash/libflyline.so flyline
+```
+
+重启 bash 即启用
 
 </details>
 

@@ -158,7 +158,7 @@ vim ~/.config/niri/config.kdl
      > <details><summary>如果你在国内</summary>
      >
      > ```sh
-     > chezmoi init --apply https://gh-proxy.org/https://github.com/jalaxy33/niri-dotfiles
+     > chezmoi init --apply https://gh-proxy.org/https://github.com/jalaxy33/dotfiles
      > ```
      >
      > </details>
