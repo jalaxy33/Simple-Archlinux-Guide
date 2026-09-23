@@ -68,7 +68,7 @@ sudo pacman -S --needed tumbler ffmpegthumbnailer poppler-glib webp-pixbuf-loade
 ### 安装必备工具
 
 ```sh
-sudo pacman -S --needed fish kitty fuzzel mpv imv satty wl-clipboard gnome-font-viewer
+sudo pacman -S --needed fish kitty fuzzel mpv imv satty wl-clipboard gnome-font-viewer adw-gtk-theme
 paru -S ttf-jetbrains-maple-mono-nf-xx-xx
 ```
 
@@ -82,6 +82,7 @@ paru -S ttf-jetbrains-maple-mono-nf-xx-xx
 - `satty` 截图编辑
 - `wl-clipboard` 提供更丰富的剪贴板功能，配合实现截图编辑
 - `gnome-font-viewer` 字体管理
+- `adw-gtk-theme` 推荐的 GTK 主题
 - `ttf-jetbrains-maple-mono-nf-xx-xx` 等宽字体，用于 kitty 的字体配置
 
 </details>
@@ -93,7 +94,7 @@ paru -S ttf-jetbrains-maple-mono-nf-xx-xx
 - [CLI命令行工具推荐](../软件工具/CLI命令行工具推荐.md)
 - [GUI软件推荐](../软件工具/GUI软件推荐.md)，如浏览器等
 
-## 2. 安装预设配置（desktop shell）
+## 2. 安装桌面shell
 
 Niri 默认状态相当简陋，可以安装 desktop shell 来获得开箱即用的配置，常用的有 [DMS](https://danklinux.com/) 和 [noctalia](https://noctalia.dev/) 等。
 
@@ -151,47 +152,47 @@ vim ~/.config/niri/config.kdl
 
 2. 我的[命令行配置](https://github.com/jalaxy33/dotfiles)：
 
-   - 初次加载
+   初次加载
 
-     ```sh
-     chezmoi init --apply jalaxy33
-     ```
+   ```sh
+   chezmoi init --apply jalaxy33
+   ```
 
-     > <details><summary>如果你在国内</summary>
-     >
-     > ```sh
-     > chezmoi init --apply https://gh-proxy.org/https://github.com/jalaxy33/dotfiles
-     > ```
-     >
-     > </details>
+   > <details><summary>如果你在国内</summary>
+   >
+   > ```sh
+   > chezmoi init --apply https://gh-proxy.org/https://github.com/jalaxy33/dotfiles
+   > ```
+   >
+   > </details>
 
-   - 同步配置：
+   同步配置：
 
-     ```sh
-     chezmoi update
-     ```
+   ```sh
+   chezmoi update
+   ```
 
 3. 我的 [niri 配置](https://github.com/jalaxy33/niri-dotfiles/)
 
-   - 初次加载
+   初次加载
 
-     ```sh
-     chezmoi init -S ~/.local/share/chezmoi-niri/ --apply https://github.com/jalaxy33/niri-dotfiles
-     ```
+   ```sh
+   chezmoi init -S ~/.local/share/chezmoi-niri/ --apply https://github.com/jalaxy33/niri-dotfiles
+   ```
 
-     > <details><summary>如果你在国内</summary>
-     >
-     > ```sh
-     > chezmoi init -S ~/.local/share/chezmoi-niri/ --apply https://gh-proxy.org/https://github.com/jalaxy33/niri-dotfiles
-     > ```
-     >
-     > </details>
+   > <details><summary>如果你在国内</summary>
+   >
+   > ```sh
+   > chezmoi init -S ~/.local/share/chezmoi-niri/ --apply https://gh-proxy.org/https://github.com/jalaxy33/niri-dotfiles
+   > ```
+   >
+   > </details>
 
-   - 同步配置：
+   同步配置：
 
-     ```sh
-     chezmoi update -S ~/.local/share/chezmoi-niri/
-     ```
+   ```sh
+   chezmoi update -S ~/.local/share/chezmoi-niri/
+   ```
 
 ### 启动 niri 桌面
 
@@ -201,13 +202,70 @@ vim ~/.config/niri/config.kdl
 niri-session
 ```
 
-默认情况下，按 `Win+Shift+/` 弹出按键提示。
+默认情况下，按 `Super+Shift+/` 弹出按键提示。
+
+## 4. 其他必要配置
+
+### 配置桌面shell
+
+<details>
+<summary><strong>DMS 设置</strong></summary><br>
+
+DMS 的设置界面在右上角，点击齿轮图标⚙️打开设置菜单。或者通过 `super+F2` 唤出。
+
+- **状态栏设置**
+
+  - 显示应用 Dock：
+
+    `状态栏` > `部件` > `左侧区域` 添加「应用Dock」部件
+
+- **设置锁屏和待机行为**
+
+  - 设置待机时间：
+
+    `电源与安全` > `电源与睡眠` > `待机设置` 设置经过多久后锁屏/关闭显示器/挂起等。
+
+- **个性化设置**
+
+  - 设置壁纸：
+
+    `个性化` > `壁纸` 最上方方框
+
+    推荐两个壁纸下载网址：[wallhaven.cc](https://wallhaven.cc/)、[哲风壁纸](https://haowallpaper.com/)
+
+  - 取消模糊壁纸层
+
+    `个性化` > `模糊壁纸层` > 关闭「带模糊效果的壁纸副本」
+
+  - 设置天气显示：
+
+    `个性化` > `时间与天气` > `天气` > `自定义位置` > `位置搜索` 用英文输入城市名称搜索
+
+- 解决快捷键冲突
+
+  dms启动器的默认快捷键 `Mod+Space` 可能与其他应用快捷键冲突（如 fcitx5）
+
+  - `Dock和启动器` > `默认启动器` > `默认启动器快捷键` > 从底部 `快捷方式` 列表中删除 `Mod+Space` 的快捷键
+  - 设置一个其他快捷键，我的习惯是 `Mod+Z`
+
+- **安装插件**
+
+  插件安装方式：`插件` > `浏览` > 选择 `显示第三方` > 选择需要的插件安装，安装后记得启用
+
+  推荐插件：
+
+  - `Emoji & Unicode Launcher`：在启动器里输入 `:e` 即可搜索emoji表情和unicode字符，选中后会复制到剪贴板，非常方便。
+  - `Quick Capture`：方便的截图录屏部件，调用 dms 的截图功能，启用后在状态栏右侧区域添加一个「Quick Capture」部件
+  - `Calculator`：为启动器添加计算器功能
+
+</details>
 
 ### 配置文件管理器
 
-niri 默认的文件管理器是 GNOME 的 `nautilus`，但是我更喜欢 XFCE 的 `thunar`。功能强大，高度可自定义，且内存占用极低。
+<details>
+<summary><strong>thunar 配置</strong></summary><br>
 
-#### 配置 thunar
+niri 默认的文件管理器是 GNOME 的 `nautilus`，但是我更喜欢 XFCE 的 `thunar`。功能强大，高度可自定义，且内存占用极低。
 
 - 管理侧边栏书签
   - 添加书签：将目录图标拖到侧边栏相应位置
@@ -241,11 +299,73 @@ niri 默认的文件管理器是 GNOME 的 `nautilus`，但是我更喜欢 XFCE 
   org.freedesktop.impl.portal.Screenshot=gnome;
   ```
 
+</details>
+
+### 设置默认图片查看器
+
+<details>
+<summary><strong>将 imv 设为默认图片查看器</strong></summary><br>
+
+imv 是轻量的图片查看器，下面介绍将 imv 设置为默认图片查看器的方法，其他看图软件同理。
+
+`imv` 默认每次只打开一张图片，建议用 `imv-dir`，可以查看当前目录下的所有图片。
+
+一条命令修改默认图片查看器为 `imv-dir`：
+
+```sh
+xdg-mime default imv-dir.desktop $(grep "^image/" /usr/share/mime/types)
+```
+
+另外，imv-dir 的默认排序不是自然排序，有时候可能会有问题。编辑 `/usr/bin/imv-dir`（不推荐）或者创建一个 `~/.local/bin/imv-dir` 并用 `chmod +x` 赋予执行权限，内容如下：
+
+- 创建脚本
+
+  ```sh
+  mkdir -p ~/.local/bin
+  vim ~/.local/bin/imv-dir
+  ```
+
+  ```sh
+  #!/bin/sh -efu
+  if [ $# -gw 2 ]; then
+    exec imv "$@"
+  else
+    exec imv -n "$1" $(ls "$(dirname "$1")" | sort -n)
+  fi
+  ```
+
+- 赋予执行权限：
+  ```sh
+  chmod +x ~/.local/bin/imv-dir
+  ```
+
+</details>
+
+### 可选：设置暗色主题
+
+- 安装管理软件和 GTK 主题：
+
+  ```sh
+  sudo pacman -S --needed nwg-look adw-gtk-theme
+  ```
+
+- 启动管理软件：
+
+  ```sh
+  nwg-look
+  ```
+
+  或者启动器搜索 `GTK Settings`
+
+- 选择主题，推荐 `adw-gtk3-dark`
+
 ### 可选：配置登录管理器
 
-如果不想每次都输入 `niri-session` 才进入桌面，可以安装一个[登录管理器](https://wiki.archlinuxcn.org/wiki/显示管理器)。常用的有 `greetd` 和 `ly`，我用的是 ly。
+如果不想每次都输入 `niri-session` 才进入桌面，可以安装一个[登录管理器](https://wiki.archlinuxcn.org/wiki/显示管理器)。
 
-#### ly 管理器
+<details>
+
+<summary><strong>ly 配置</strong></summary><br>
 
 [Ly](https://codeberg.org/fairyglade/ly) 是一个轻量级的 TUI 登录管理器。
 
@@ -267,7 +387,9 @@ sudo systemctl enable ly@tty1
 > sudo systemctl disable getty@tty1
 > ```
 
-## 使用技巧
+</details>
+
+## 附录
 
 ### 获取窗口信息
 
@@ -284,7 +406,7 @@ niri msg pick-window
 总的来说是两类方式：
 
 <details>
-<summary><strong>通过 xdg-mime 命令设置</strong></summary><br>
+<summary><strong>方式一：通过命令行设置</strong></summary><br>
 
 最通用，无需 GUI 界面
 
@@ -312,7 +434,7 @@ niri msg pick-window
 </details>
 
 <details>
-<summary><strong>通过 GUI 设置</strong></summary><br>
+<summary><strong>方式二：通过 GUI 设置</strong></summary><br>
 
 通过安装 GNOME、KDE 或 Xfce 等桌面的「桌面设置」软件来设置默认应用程序。
 
@@ -331,34 +453,6 @@ xfce4-settings-manager
 找到「**默认应用程序**」，在「**其他**」选项卡从列表中选择应用并设为默认
 
 </details>
-
-### 设置 imv 为默认图片查看器
-
-`imv` 默认每次只打开一张图片，建议用 `imv-dir`，可以查看当前目录下的所有图片。
-
-<details>
-<summary><strong>设置方式</strong></summary><br>
-
-一条命令修改默认图片查看器为 `imv-dir`：
-
-```sh
-xdg-mime default imv-dir.desktop $(grep "^image/" /usr/share/mime/types)
-```
-
-另外，imv-dir 的默认排序不是自然排序，有时候可能会有问题。编辑 `/usr/bin/imv-dir`（不推荐）或者创建一个 `~/.local/bin/imv-dir` 并用 `chmod +x` 赋予执行权限，内容如下：
-
-```sh
-#!/bin/sh -efu
-if [ $# -gw 2 ]; then
-  exec imv "$@"
-else
-  exec imv -n "$1" $(ls "$(dirname "$1")" | sort -n)
-fi
-```
-
-</details>
-
-## 附录
 
 ### 在虚拟机中安装 Niri<a name="vm-niri"></a>
 

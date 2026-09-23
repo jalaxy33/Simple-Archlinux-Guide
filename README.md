@@ -14,13 +14,18 @@
 
 ## 文档目录
 
-- [好用的命令行工具](./docs/好用的命令行工具.md)
-- [我的Niri配置](./docs/我的Niri配置.md)
-- [本地化设置](./docs/本地化设置.md)
-- [如何安装软件](./docs/如何安装软件.md)
-- [常用软件](./docs/常用软件.md)
-- [编程开发工具](./docs/编程开发工具.md)
-- [用wine兼容层安装windows软件](./docs/用wine兼容层安装windows软件.md)
-- [远程桌面](./docs/远程桌面.md)
-- [我遇到过的问题](./docs/我遇到过的问题.md)
-- [ArchLinux常用命令](./docs/ArchLinux常用命令.md)
+- 系统安装教程：[手动安装 ArchLinux](./docs/系统安装/手动安装ArchLinux.md)
+  - 分区格式化与挂载：[btrfs分区](./docs/系统安装/btrfs分区格式化与挂载.md)，[ext4分区](./docs/系统安装/ext4分区格式化与挂载.md)
+  - 引导程序：[GRUB引导](./docs/系统安装/安装GRUB引导.md)，[systemd-boot引导](./docs/系统安装/安装systemd-boot引导.md)
+
+- 配置桌面环境：
+  - [安装 Niri 桌面](./docs/桌面环境/安装Niri.md)
+
+- 软件工具：
+  - [CLI命令行工具推荐](./docs/软件工具/CLI命令行工具推荐.md)
+  - [GUI软件推荐](./docs/软件工具/GUI软件推荐.md)
+  - [配置网络代理](./docs/软件工具/proxy网络代理.md)
+
+- 日常使用：
+  - [远程桌面](./docs/日常使用/远程桌面.md)
+  - [我遇到过的问题](./docs/我遇到过的问题.md)
