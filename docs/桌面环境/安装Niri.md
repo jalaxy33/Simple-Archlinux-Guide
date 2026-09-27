@@ -142,7 +142,8 @@ vim ~/.config/niri/config.kdl
 
 ### 可选：使用我的配置
 
-如果想用我的配置
+<details>
+<summary>如果想用我的配置，按如下步骤操作</summary>
 
 1. 安装 chezmoi：
 
@@ -194,11 +195,13 @@ vim ~/.config/niri/config.kdl
      chezmoi update -S ~/.local/share/chezmoi-niri/
      ```
 
-   拉取或同步niri配置后，重启shell，执行以下命令检查并安装缺失的依赖：
+   **推荐**：第二步拉取或同步命令行配置后，重启shell，执行以下命令检查并安装缺失的依赖：
 
    ```sh
-   check-niri-dependencies
+   ensure-niri-depends
    ```
+
+</details>
 
 ### 启动 niri 桌面
 
