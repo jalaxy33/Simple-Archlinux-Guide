@@ -71,73 +71,80 @@ curl -I www.google.com
 
    ```dae
    global {
-     # Bind to LAN and/or WAN as you want. Replace the interface name to your own.
-     #lan_interface: docker0
-     wan_interface: auto # Use "auto" to auto detect WAN interface.
-
+     # Auto-detect WAN interface.
+     wan_interface: auto
+   
+     # IPv4-only DNS for UDP checks.
+     udp_check_dns: '8.8.4.4:53'
+   
      log_level: info
      allow_insecure: false
      auto_config_kernel_parameter: true
-
-     # This DNS will be used to check UDP connectivity of nodes. And if dns_upstream below contains tcp, it also be used to check
-     # TCP DNS connectivity of nodes.
-     # First is URL, others are IP addresses if given.
-     # This DNS should have both IPv4 and IPv6 if you have double stack in local.
-     #udp_check_dns: 'dns.google:53'
-     udp_check_dns: 'dns.google:53,8.8.8.8,2001:4860:4860::8888'
-
-     check_interval: 30s
-
-     # Group will switch node only when new_latency <= old_latency - tolerance.
-     check_tolerance: 50ms
    }
-
+   
+   
    subscription {
      # Fill in your subscription links here.
-     # my_sub: 'https://xxxxxxxx'
+     # my_sub: 'https://your-subscription-link'
    }
-
-    # See https://github.com/daeuniverse/dae/blob/main/docs/en/configuration/dns.md for full examples.
-    dns {
-      upstream {
-        googledns: 'tcp+udp://dns.google:53'
-        alidns: 'udp://dns.alidns.com:53'
-      }
-      routing {
-        request {
-          qname(geosite:cn) -> alidns
-          fallback: googledns
-        }
-      }
-    }
-
-    group {
-      proxy {
-        #filter: name(keyword: HK, keyword: SG)
-        policy: min_moving_avg
-        #policy: min_avg10
-      }
-    }
-
-    # See https://github.com/daeuniverse/dae/blob/main/docs/en/configuration/routing.md for full examples.
-    routing {
-      pname(NetworkManager) -> direct
-      dip(224.0.0.0/3, 'ff00::/8') -> direct
-
-      ### Write your rules below.
-
-      # Disable h3 because it usually consumes too much cpu/mem resources.
-      l4proto(udp) && dport(443) -> block
-      dip(geoip:private) -> direct
-      dip(geoip:cn) -> direct
-      domain(geosite:cn) -> direct
-
-      # my configs
-      domain(suffix:github.com, suffix:notion.com) -> proxy
-      domain(suffix:xiaoe-tech.com, suffix:yuque.com) -> direct
-
-      fallback: proxy
-    }
+   
+   dns {
+     # Prefer IPv4; no AAAA.
+     ipversion_prefer: 4
+   
+     upstream {
+       # Google DNS over TCP+UDP.
+       googledns: 'tcp+udp://dns.google:53'
+       # AliDNS over UDP.
+       alidns: 'udp://dns.alidns.com:53'
+     }
+   
+     routing {
+       request {
+         # China domains via AliDNS; fallback to Google DNS.
+         qname(geosite:cn) -> alidns
+         fallback: googledns
+       }
+     }
+   }
+   
+   
+   group {
+     proxy {
+       # Pick the node with the lowest moving average latency per connection.
+       policy: min_moving_avg
+     }
+   }
+   
+   
+   routing {
+     # Force DNS/SSH-related processes direct.
+     pname(dnsmasq, dropbear) -> must_direct
+   
+     # Force DNS server IPs/domains direct.
+     dip(8.8.8.8) -> must_direct
+     dip(1.1.1.1) -> must_direct
+     domain(dns.alidns.com) -> must_direct
+     domain(dns.google) -> must_direct
+     domain(cloudflare-dns.com) -> must_direct
+   
+     # Multicast/broadcast and private IPs direct.
+     dip(224.0.0.0/3, 'ff00::/8') -> direct
+     dip(geoip:private) -> direct
+   
+     # China IPs/domains direct.
+     dip(geoip:cn) -> direct
+     domain(geosite:cn) -> direct
+   
+     # Block ads.
+     domain(geosite:category-ads) -> block
+   
+     # Per-domain overrides.
+     domain(suffix:github.com, suffix:notion.com) -> proxy
+     domain(suffix:xiaoe-tech.com, suffix:yuque.com) -> direct
+   
+     fallback: proxy
+   }
    ```
 
     </details>
