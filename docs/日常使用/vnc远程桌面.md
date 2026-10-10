@@ -25,7 +25,7 @@ sudo pacman -S xfce4
 然后安装 vnc 服务，这里选择 tigervnc：
 
 ```sh
-sudp pacman -S tigervnc
+sudo pacman -S tigervnc
 ```
 
 配置 vnc 服务器：

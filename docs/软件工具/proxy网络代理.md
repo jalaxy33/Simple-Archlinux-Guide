@@ -105,13 +105,8 @@ curl -I www.google.com
       }
       routing {
         request {
-          qtype(https) -> reject
-          fallback: alidns
-        }
-        response {
-          upstream(googledns) -> accept
-          ip(geoip:private) && !qname(geosite:cn) -> googledns
-          fallback: accept
+          qname(geosite:cn) -> alidns
+          fallback: googledns
         }
       }
     }
