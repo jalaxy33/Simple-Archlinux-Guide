@@ -42,15 +42,148 @@ curl -I www.google.com
 
 ## 代理工具推荐
 
+### dae
+
+基于 eBPF 的内核级透明代理工具，性能好，纯命令行工具。
+
+> 注意：**dae 不支持 clash 订阅链接**，请使用 vless 或 vmess 等链接格式
+
+1. 安装 dae
+
+   ```sh
+   sudo pacman -S dae
+   ```
+
+   也可以安装带 AVX2 CPU 优化版本的，这个包在 archlinuxcn 里：
+
+   ```sh
+   sudo pacman -S dae-avx2-bin
+   ```
+
+2. 编辑配置文件：
+
+   ```sh
+   sudo vim /etc/dae/config.dae
+   ```
+
+    <details>
+    <summary>写入这些内容（注意在 subscription 处填入订阅链接）</summary>
+
+   ```dae
+   global {
+     # Bind to LAN and/or WAN as you want. Replace the interface name to your own.
+     #lan_interface: docker0
+     wan_interface: auto # Use "auto" to auto detect WAN interface.
+
+     log_level: info
+     allow_insecure: false
+     auto_config_kernel_parameter: true
+
+     # This DNS will be used to check UDP connectivity of nodes. And if dns_upstream below contains tcp, it also be used to check
+     # TCP DNS connectivity of nodes.
+     # First is URL, others are IP addresses if given.
+     # This DNS should have both IPv4 and IPv6 if you have double stack in local.
+     #udp_check_dns: 'dns.google:53'
+     udp_check_dns: 'dns.google:53,8.8.8.8,2001:4860:4860::8888'
+
+     check_interval: 30s
+
+     # Group will switch node only when new_latency <= old_latency - tolerance.
+     check_tolerance: 50ms
+   }
+
+   subscription {
+     # Fill in your subscription links here.
+     # my_sub: 'https://xxxxxxxx'
+   }
+
+    # See https://github.com/daeuniverse/dae/blob/main/docs/en/configuration/dns.md for full examples.
+    dns {
+      upstream {
+        googledns: 'tcp+udp://dns.google:53'
+        alidns: 'udp://dns.alidns.com:53'
+      }
+      routing {
+        request {
+          qtype(https) -> reject
+          fallback: alidns
+        }
+        response {
+          upstream(googledns) -> accept
+          ip(geoip:private) && !qname(geosite:cn) -> googledns
+          fallback: accept
+        }
+      }
+    }
+
+    group {
+      proxy {
+        #filter: name(keyword: HK, keyword: SG)
+        policy: min_moving_avg
+        #policy: min_avg10
+      }
+    }
+
+    # See https://github.com/daeuniverse/dae/blob/main/docs/en/configuration/routing.md for full examples.
+    routing {
+      pname(NetworkManager) -> direct
+      dip(224.0.0.0/3, 'ff00::/8') -> direct
+
+      ### Write your rules below.
+
+      # Disable h3 because it usually consumes too much cpu/mem resources.
+      l4proto(udp) && dport(443) -> block
+      dip(geoip:private) -> direct
+      dip(geoip:cn) -> direct
+      domain(geosite:cn) -> direct
+
+      # my configs
+      domain(suffix:github.com, suffix:notion.com) -> proxy
+      domain(suffix:xiaoe-tech.com, suffix:yuque.com) -> direct
+
+      fallback: proxy
+    }
+   ```
+
+    </details>
+
+3. 验证配置文件正确性
+
+   ```sh
+   sudo dae validate -c /etc/dae/config.dae
+   ```
+
+4. 启动服务
+
+   ```sh
+   sudo systemctl start dae
+   ```
+
+   如果要设置开机自启：
+
+   ```sh
+   sudo systemctl enable --now dae
+   ```
+
+5. 后续如果更新了配置文件或需要手动更新订阅，执行以下命令重载：
+
+   ```sh
+   sudo dae reload
+   ```
+
+   重载过程通常不会中断现有连接，且比完全重启服务更快。
+
 ### daed
 
-这是我觉得最简单的方法，需要连接同个局域网的另一台设备
+dae 的 webui。这是我觉得最简单的方法，但是可能需要连接同个局域网的另一台设备
 
 1. 安装 daed，这个包在 archlinuxcn 源里：
 
    ```sh
    sudo pacman -S daed
    ```
+
+   > 注意，daed 和 dae 冲突，只能装其中一个
 
 2. 启动服务：
 
