@@ -46,7 +46,7 @@ curl -I www.google.com
 
 基于 eBPF 的内核级透明代理工具，性能好，纯命令行工具。
 
-> 注意：**dae 不支持 clash 订阅链接**，请使用 vless 或 vmess 等链接格式
+> 注意：**dae 不支持 clash 订阅链接**，请使用 vless 或 vmess 等[链接格式](https://github.com/daeuniverse/dae/blob/main/docs/zh/proxy-protocols.md)
 
 1. 安装 dae
 
