@@ -73,32 +73,32 @@ curl -I www.google.com
    global {
      # Auto-detect WAN interface.
      wan_interface: auto
-   
+
      # IPv4-only DNS for UDP checks.
      #udp_check_dns: '8.8.4.4:53'
-   
+
      log_level: info
      allow_insecure: false
      auto_config_kernel_parameter: true
    }
-   
-   
+
+
    subscription {
      # Fill in your subscription links here.
      # my_sub: 'https://your-subscription-link'
    }
-   
+
    dns {
      # Prefer IPv4; no AAAA.
      ipversion_prefer: 4
-   
+
      upstream {
        # Google DNS over TCP+UDP.
        googledns: 'tcp+udp://dns.google:53'
        # AliDNS over UDP.
        alidns: 'udp://dns.alidns.com:53'
      }
-   
+
      routing {
        request {
          # China domains via AliDNS; fallback to Google DNS.
@@ -107,42 +107,42 @@ curl -I www.google.com
        }
      }
    }
-   
-   
+
+
    group {
      proxy {
        # Pick the node with the lowest moving average latency per connection.
        policy: min_moving_avg
      }
    }
-   
-   
+
+
    routing {
      # Force DNS/SSH-related processes direct.
-     pname(dnsmasq, dropbear) -> must_direct
-   
+     pname(NetworkManager, systemd-resolved, dnsmasq, dropbear) -> must_direct
+
      # Force DNS server IPs/domains direct.
      dip(8.8.8.8) -> must_direct
      dip(1.1.1.1) -> must_direct
      domain(dns.alidns.com) -> must_direct
      domain(dns.google) -> must_direct
      domain(cloudflare-dns.com) -> must_direct
-   
+
      # Multicast/broadcast and private IPs direct.
      dip(224.0.0.0/3, 'ff00::/8') -> direct
      dip(geoip:private) -> direct
-   
+
      # China IPs/domains direct.
      dip(geoip:cn) -> direct
      domain(geosite:cn) -> direct
-   
+
      # Block ads.
      domain(geosite:category-ads) -> block
-   
+
      # Per-domain overrides.
      domain(suffix:github.com, suffix:notion.com) -> proxy
      domain(suffix:xiaoe-tech.com, suffix:yuque.com) -> direct
-   
+
      fallback: proxy
    }
    ```
@@ -205,7 +205,45 @@ dae 的 webui。这是我觉得最简单的方法，但是可能需要连接同�
    ip a
    ```
 
-4. 用处于同一局域网的设备访问 `http://<IP_ADDRESS>:2023` 登录 webui 管理界面，设置管理账号和六位以上密码，填入订阅链接，然后就可以开启代理了。
+4. 用处于同一局域网的设备访问 `http://<IP_ADDRESS>:2023` 登录 webui 管理界面，设置管理账号和六位以上密码，填入订阅链接，将订阅拖入「群组」的订阅组处，之后点击右上角开关就开启代理了。
+
+5. （可选）如果代理不稳定，需要创建或修改路由规则。
+
+   方法：webui 右上角「路由」标签卡，编辑已有规则或创建一个新规则，选择「进阶模式」。
+
+    <details>
+    <summary>填入以下内容</summary>
+
+   ```dae
+   # Force DNS/SSH-related processes direct.
+   pname(NetworkManager, systemd-resolved, dnsmasq, dropbear) -> must_direct
+
+   # Force DNS server IPs/domains direct.
+   dip(8.8.8.8) -> must_direct
+   dip(1.1.1.1) -> must_direct
+   domain(dns.alidns.com) -> must_direct
+   domain(dns.google) -> must_direct
+   domain(cloudflare-dns.com) -> must_direct
+
+   # Multicast/broadcast and private IPs direct.
+   dip(224.0.0.0/3, 'ff00::/8') -> direct
+   dip(geoip:private) -> direct
+
+   # China IPs/domains direct.
+   dip(geoip:cn) -> direct
+   domain(geosite:cn) -> direct
+
+   # Block ads.
+   domain(geosite:category-ads) -> block
+
+   # Per-domain overrides.
+   domain(suffix:github.com, suffix:notion.com) -> proxy
+   domain(suffix:xiaoe-tech.com, suffix:yuque.com) -> direct
+
+   fallback: proxy
+   ```
+
+    </details>
 
 ### flclash
 
