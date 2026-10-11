@@ -75,7 +75,7 @@ curl -I www.google.com
      wan_interface: auto
    
      # IPv4-only DNS for UDP checks.
-     udp_check_dns: '8.8.4.4:53'
+     #udp_check_dns: '8.8.4.4:53'
    
      log_level: info
      allow_insecure: false
