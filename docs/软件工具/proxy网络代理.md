@@ -114,6 +114,11 @@ curl -I www.google.com
        # Pick the node with the lowest moving average latency per connection.
        policy: min_moving_avg
      }
+
+     hk_sg {
+      filter: name(regex: 'HK|香港|SG|新加坡')
+      policy: min_moving_avg
+    }
    }
 
 
