@@ -12,7 +12,7 @@
 curl -I www.google.com
 ```
 
-返回由 `HTTP ... OK` 开头的一大串内容就是成功了。
+返回由 `HTTP ... 200 ...` 开头的一大串内容就是成功了。
 
 ## 临时桌面环境<a name="tmpde"></a>
 
@@ -42,230 +42,19 @@ curl -I www.google.com
 
 ## 代理工具推荐
 
-### dae
+追求配置简单的用带 GUI 或 webui 的，追求底层控制的直接用相应的裸核配置，后者有更高的性能上限。
 
-基于 eBPF 的内核级透明代理工具，性能好，纯命令行工具。
+### mihomo 系（clash 系）
 
-> 注意：**dae 不支持 clash 订阅链接**，请使用 vless 或 vmess 等[链接格式](https://github.com/daeuniverse/dae/blob/main/docs/zh/proxy-protocols.md)
+- [clash-verge](./代理软件/clash-verge代理.md)：基于 tauri 的 GUI 软件，设置项丰富，新手推荐。
+- [flclash](./代理软件/flclash代理.md)：基于 electron 的 GUI 软件，界面美观，新手推荐。
+- [mihomo裸核](https://github.com/jalaxy33/learn-mihomo/blob/main/docs/mihomo-on-linux.md)：mihomo 系代理的底层服务，命令行工具，配置难度较高但更灵活，性能好且稳定。
 
-1. 安装 dae
+### dae 系
 
-   ```sh
-   sudo pacman -S dae
-   ```
+dae 是基于 eBPF 的内核级透明代理工具，性能好。
 
-   也可以安装带 AVX2 CPU 优化版本的，这个包在 archlinuxcn 里：
+> （2026.10）注：经测试，目前 dae 和 daed 代理的网络连接不稳定，建议使用其他方案
 
-   ```sh
-   sudo pacman -S dae-avx2-bin
-   ```
-
-2. 编辑配置文件：
-
-   ```sh
-   sudo vim /etc/dae/config.dae
-   ```
-
-    <details>
-    <summary>写入这些内容（注意在 subscription 处填入订阅链接）</summary>
-
-   ```dae
-   global {
-     # Auto-detect WAN interface.
-     wan_interface: auto
-
-     # IPv4-only DNS for UDP checks.
-     #udp_check_dns: '8.8.4.4:53'
-
-     log_level: info
-     allow_insecure: false
-     auto_config_kernel_parameter: true
-   }
-
-
-   subscription {
-     # Fill in your subscription links here.
-     # my_sub: 'https://your-subscription-link'
-   }
-
-   dns {
-     # Prefer IPv4; no AAAA.
-     ipversion_prefer: 4
-
-     upstream {
-       # Google DNS over TCP+UDP.
-       googledns: 'tcp+udp://dns.google:53'
-       # AliDNS over UDP.
-       alidns: 'udp://dns.alidns.com:53'
-     }
-
-     routing {
-       request {
-         # China domains via AliDNS; fallback to Google DNS.
-         qname(geosite:cn) -> alidns
-         fallback: googledns
-       }
-     }
-   }
-
-
-   group {
-     proxy {
-       # Pick the node with the lowest moving average latency per connection.
-       policy: min_moving_avg
-     }
-
-     hk_sg {
-      filter: name(regex: 'HK|香港|SG|新加坡')
-      policy: min_moving_avg
-    }
-   }
-
-
-   routing {
-     # Force DNS/SSH-related processes direct.
-     pname(NetworkManager, systemd-resolved, dnsmasq, dropbear) -> must_direct
-
-     # Force DNS server IPs/domains direct.
-     dip(8.8.8.8) -> must_direct
-     dip(1.1.1.1) -> must_direct
-     domain(dns.alidns.com) -> must_direct
-     domain(dns.google) -> must_direct
-     domain(cloudflare-dns.com) -> must_direct
-
-     # Multicast/broadcast and private IPs direct.
-     dip(224.0.0.0/3, 'ff00::/8') -> direct
-     dip(geoip:private) -> direct
-
-     # China IPs/domains direct.
-     dip(geoip:cn) -> direct
-     domain(geosite:cn) -> direct
-
-     # Block ads.
-     domain(geosite:category-ads) -> block
-
-     # Per-domain overrides.
-     domain(suffix:github.com, suffix:notion.com) -> proxy
-     domain(suffix:xiaoe-tech.com, suffix:yuque.com) -> direct
-
-     fallback: proxy
-   }
-   ```
-
-    </details>
-
-3. 验证配置文件正确性
-
-   ```sh
-   sudo dae validate -c /etc/dae/config.dae
-   ```
-
-4. 启动服务
-
-   ```sh
-   sudo systemctl start dae
-   ```
-
-   如果要设置开机自启：
-
-   ```sh
-   sudo systemctl enable --now dae
-   ```
-
-5. 后续如果更新了配置文件或需要手动更新订阅，执行以下命令重载：
-
-   ```sh
-   sudo dae reload
-   ```
-
-   重载过程通常不会中断现有连接，且比完全重启服务更快。
-
-### daed
-
-dae 的 webui。这是我觉得最简单的方法，但是可能需要连接同个局域网的另一台设备
-
-1. 安装 daed，这个包在 archlinuxcn 源里：
-
-   ```sh
-   sudo pacman -S daed
-   ```
-
-   > 注意，daed 和 dae 冲突，只能装其中一个
-
-2. 启动服务：
-
-   ```sh
-   sudo systemctl start daed
-   ```
-
-   如果要设置开机自启：
-
-   ```sh
-   sudo systemctl enable --now daed
-   ```
-
-3. 获取 IP 地址：
-
-   ```sh
-   ip a
-   ```
-
-4. 用处于同一局域网的设备访问 `http://<IP_ADDRESS>:2023` 登录 webui 管理界面，设置管理账号和六位以上密码，填入订阅链接，将订阅拖入「群组」的订阅组处，之后点击右上角开关就开启代理了。
-
-5. （可选）如果代理不稳定，需要创建或修改路由规则。
-
-   方法：webui 右上角「路由」标签卡，编辑已有规则或创建一个新规则，选择「进阶模式」。
-
-    <details>
-    <summary>填入以下内容</summary>
-
-   ```dae
-   # Force DNS/SSH-related processes direct.
-   pname(NetworkManager, systemd-resolved, dnsmasq, dropbear) -> must_direct
-
-   # Force DNS server IPs/domains direct.
-   dip(8.8.8.8) -> must_direct
-   dip(1.1.1.1) -> must_direct
-   domain(dns.alidns.com) -> must_direct
-   domain(dns.google) -> must_direct
-   domain(cloudflare-dns.com) -> must_direct
-
-   # Multicast/broadcast and private IPs direct.
-   dip(224.0.0.0/3, 'ff00::/8') -> direct
-   dip(geoip:private) -> direct
-
-   # China IPs/domains direct.
-   dip(geoip:cn) -> direct
-   domain(geosite:cn) -> direct
-
-   # Block ads.
-   domain(geosite:category-ads) -> block
-
-   # Per-domain overrides.
-   domain(suffix:github.com, suffix:notion.com) -> proxy
-   domain(suffix:xiaoe-tech.com, suffix:yuque.com) -> direct
-
-   fallback: proxy
-   ```
-
-    </details>
-
-### flclash
-
-flclash 需要图形环境，如果还没安装桌面，可以先安装一个[临时桌面环境](#tmpde)。
-
-1. 安装 flclash，它在 archlinuxcn 源里：
-
-   ```sh
-   sudo pacman -S flclash
-   ```
-
-2. 启动
-
-   ```sh
-   flclash
-   ```
-
-3. 在主页开启 TUN 虚拟网卡
-
-4. 导入订阅链接后，点击主页右下角三角形启动代理
+- [daed](./代理软件/daed代理.md)：dae 的 webui，无需图形环境，配置简单，开箱即用。
+- [dae裸核](./代理软件/dae代理.md)：基于 eBPF 的内核级透明代理工具，性能好，纯命令行工具。
