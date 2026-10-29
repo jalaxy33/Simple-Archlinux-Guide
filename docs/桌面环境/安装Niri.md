@@ -478,7 +478,7 @@ xfce4-settings-manager
 1. 首先确认核显编号：
 
 ```sh
-spci -Dnnk | grep -A3 -iE "vga|3d|display controller"
+lspci -Dnnk | grep -A3 -iE "vga|3d|display controller"
 ```
 
 命令输出类似于：
