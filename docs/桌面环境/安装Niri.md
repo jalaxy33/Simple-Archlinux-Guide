@@ -100,14 +100,14 @@ Niri 默认状态相当简陋，可以安装 desktop shell 来获得开箱即用
 
 下面提供几种常用桌面shell的安装配置方法，我用的是 DMS。
 
-### Dank Material Shell
+### Dux
 
-[DMS](https://danklinux.com/) 是 niri 官方推荐的 desktop shell，基于 quickshell，设计美观，功能齐全，且资源占用很低，
+[dux](https://duxlabs.dev/) (原名 dank material shell 或 dms) 是 niri 官方推荐的 desktop shell，基于 quickshell，设计美观，功能齐全，且资源占用很低，
 
-安装 dms：
+安装 dux：
 
 ```sh
-sudo pacman -S --needed dms-shell-niri
+sudo pacman -S --needed dux-shell
 ```
 
 安装可选依赖：
@@ -348,6 +348,7 @@ xdg-mime default imv-dir.desktop $(grep "^image/" /usr/share/mime/types)
   ```
 
 - 赋予执行权限：
+
   ```sh
   chmod +x ~/.local/bin/imv-dir
   ```

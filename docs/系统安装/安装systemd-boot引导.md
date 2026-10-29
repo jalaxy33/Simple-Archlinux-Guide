@@ -23,7 +23,7 @@ bootctl install
 vim /boot/loader/loader.conf
 ```
 
-```
+```text
 default  @saved
 timeout  4
 console-mode auto
@@ -32,7 +32,7 @@ editor   no
 
 <details><summary>选项说明</summary>
 
-```
+```text
 - `default`：默认启动项。`@saved` 表示记住启动项
 - `timeout`：超时等待的秒数
 - `console-mode`：菜单分辨率。`auto` 表示自动调整
@@ -84,7 +84,7 @@ options root=UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx rw
    vim /boot/loader/entries/arch.conf
    ```
 
-   ```
+   ```text
    title   Arch Linux
    linux   /vmlinuz-linux
    initrd  /initramfs-linux.img

@@ -112,7 +112,7 @@ timedatectl
 
 应该看到：
 
-```
+```text
 NTP service: active
 ```
 
@@ -132,7 +132,7 @@ reflector -p https -a 12 -c cn --v --sort rate --save /etc/pacman.d/mirrorlist
 
 <details><summary>参数说明</summary>
 
-```
+```text
 # -p（protocol） https 指定 https 协议的链接
 # -a（age） 12 指定最近 12 小时更新过的源
 # -c（country） cn 指定国家为中国（可以增加邻国）
@@ -209,15 +209,18 @@ cfdisk /dev/要被分区的磁盘   # 如 /dev/sda, /dev/nvme0n1
 <details><summary>常用的文件系统格式</summary>
 
 - [ext4](https://wiki.archlinuxcn.org/wiki/Ext4)：最常用的文件系统格式。简单、稳定、性能好。缺点是没有快照、透明压缩等好用的现代特性。
+- [xfs](https://wiki.archlinuxcn.org/wiki/XFS)：高性能文件系统，稳定、性能好，大文件 IO 性能优于 ext4，缺点是无法缩容，且也没有快照、透明压缩等现代特性。
 - [btrfs](https://wiki.archlinuxcn.org/wiki/Btrfs)：新一代文件系统格式。拥有快照、透明压缩等现代特性，非常契合 archlinux，缺点是稳定性和性能稍差于 ext4。
 
 </details>
 
-> 我的建议：日常使用更推荐 btrfs，有快照可以随时回档，不怕滚挂。如果想简单一点，不需要快照等功能，追求性能就选 ext4。
+> 我的建议：日常使用更推荐 btrfs，有快照可以随时回档，不怕滚挂。如果想简单一点，不需要快照等功能，追求性能就选 xfs 或 ext4。
+> 也可以混合使用，根分区用 btrfs 方便快照回档，其他分区用 xfs 或 ext4。
 
 👉 各文件系统的格式化和挂载方法：
 
 - [btrfs分区格式化与挂载](./btrfs分区格式化与挂载.md)
+- [xfs分区格式化与挂载](./xfs分区格式化与挂载.md)
 - [ext4分区格式化与挂载](./ext4分区格式化与挂载.md)
 
 ## 2. 开始安装系统
@@ -371,7 +374,7 @@ hwclock --systohc
    vim /etc/locale.conf
    ```
 
-   ```
+   ```text
    LANG=en_US.UTF-8
    ```
 
@@ -506,7 +509,7 @@ systemctl enable NetworkManager
    vim /etc/ssh/sshd_config
    ```
 
-   ```
+   ```text
    # 取消下面几行的注释
    AllowAgentForwarding yes
    AllowTcpForwarding yes
@@ -533,7 +536,7 @@ systemctl enable NetworkManager
 vim /etc/environment
 ```
 
-```
+```text
 EDITOR=vim
 ```
 
@@ -604,7 +607,7 @@ reboot
 
    搜索 `wheel`，取消注释：
 
-   ```
+   ```text
    %wheel ALL=(ALL:ALL) ALL
    ```
 
@@ -651,7 +654,7 @@ archlinuxcn源包含了很多好用的软件包。
 
    在底部写入：
 
-   ```
+   ```text
    [archlinuxcn]
    Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch
    Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
@@ -659,7 +662,7 @@ archlinuxcn源包含了很多好用的软件包。
 
    这两个是国内源，如果你在海外也可以直接用官方源：
 
-   ```
+   ```text
    [archlinuxcn]
    Server = https://repo.archlinuxcn.org/$arch
    ```
@@ -784,7 +787,6 @@ sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-jetbrains-mono-ner
 
     <details><summary>说明</summary>
 
-   _
    - `sof-firmware` 为现代音视频设备提供固件
    - `alsa-ucm-conf` 提供必要的配置文件
    - `alsa-firmware` 为不常见或者较旧的设备提供固件
