@@ -475,39 +475,56 @@ xfce4-settings-manager
 <details>
 <summary><strong>在 KVM 中安装 Niri</strong></summary><br>
 
-1. 首先确认核显编号：
+1. 虚拟机内，确认可用的渲染设备
 
-```sh
-lspci -Dnnk | grep -A3 -iE "vga|3d|display controller"
-```
+    ```sh
+    sudo ls /dev/dri | grep render*
+    ```
 
-命令输出类似于：
+   输出类似于 `renderD128`，可能有多个，记住名称。
 
-```sh
-0000:00:02.0 Display controller [0380]: Intel Corporation Alder Lake-S GT1 [UHD Graphics 770] [8086:4680] (rev 0c)
-  Subsystem: Dell Device [1028:0a9f]
-  Kernel driver in use: i915
-  Kernel modules: i915, xe
---
-0000:01:00.0 VGA compatible controller [0300]: NVIDIA Corporation GA102 [GeForce RTX 3080 Lite Hash Rate] [10de:2216] (rev a1)
-  Subsystem: Micro-Star International Co., Ltd. [MSI] Device [1462:3896]
-  Kernel driver in use: nvidia
-  Kernel modules: nouveau, nvidia_drm, nvidia
-```
+2. 宿主机调整 virt-manager 的虚拟机配置，建议先关闭虚拟机系统
 
-找到核显开头的编号，这里是 `0000:00:02.0`
+    - 「**显卡 virtio**」：开启 3D 加速。
 
-2. 调整 virt-manager 的虚拟机设置：
-   - 「显示协议 Spice」保持默认设置：「监听类型」为地址，不启用 OpenGL 选项
-   - 「显卡 virtio」开启 3D 加速功能
-   - 右下角选择「添加硬件」，点击「图形」，切换到 XML 编辑界面，手动编辑：
+      对应的 XML 类似于
 
-     ```xml
-     <graphics type="egl-headless">
-       <gl rendernode="/dev/dri/by-path/pci-0000:00:02.0-render"/>
-     </graphics>
-     ```
+      ```xml
+      <video>
+        <model type="virtio" heads="1" primary="yes" device="virtio-vga">
+          <acceleration accel3d="yes"/>
+        </model>
+      </video>
+      ```
 
-     记得改成自己的核显编号，保存后重启虚拟机。
+      确认有 `accel3d="yes"`
+
+    - 「**显示协议 spice**」：确保监听类型为"地址"，且关闭 opengl 选项。
+
+      对应的 XML 类似于
+
+        ```xml
+        <graphics type="spice" port="5900" autoport="yes" listen="127.0.0.1">
+          <listen type="address" address="127.0.0.1"/>
+          <image compression="off"/>
+          <gl enable="no"/>
+        </graphics>
+        ```
+
+      确认 `listen type="address"`，`autoport="yes"` 且 `gl enable="no"`
+
+    - 创建「**egl-headless 显示协议**」：
+
+      左下角选择 "添加硬件"，选择 "图形"，切换到 XML 配置页，填入：
+
+        ```xml
+        <graphics type="egl-headless">
+          <gl rendernode="/dev/dri/renderD128"/>
+        </graphics>
+        ```
+
+      其中的 `renderD128` 改成之前在虚拟机里查到的渲染设备，可能有多个，都试试，如果一个不行就换下一个。
+
+3. 保存，重启虚拟机。
 
 </details>
